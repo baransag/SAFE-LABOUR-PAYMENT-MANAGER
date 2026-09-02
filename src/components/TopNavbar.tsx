@@ -59,8 +59,8 @@ export default function TopNavbar({ currentUser, onOpenQuickSearch }: TopNavbarP
     <header className="no-print w-full flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6">
       {/* Brand & Subtitle */}
       <div className="flex items-center gap-3.5">
-        <div className="w-11 h-11 rounded-2xl bg-[#2F6F6D] flex items-center justify-center text-[#F2E9D8] shadow-md shadow-[#2F6F6D]/20">
-          <Building2 className="w-6 h-6" />
+        <div className="w-11 h-11 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md border border-slate-200 shrink-0 overflow-hidden">
+          <img src="/assest/logo.jpeg" alt="SAFE SOLUTIONS" className="w-full h-full object-contain" />
         </div>
         <div>
           <div className="flex items-center gap-2">

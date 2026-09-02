@@ -52,10 +52,10 @@ export default function Sidebar({ userRole = 'ACCOUNTS' }: SidebarProps) {
       {/* Brand Icon */}
       <Link
         href="/"
-        className="w-12 h-12 rounded-2xl bg-[#2F6F6D] hover:bg-[#285d5b] flex items-center justify-center mb-8 shadow-lg shadow-[#2F6F6D]/30 transition group relative"
+        className="w-12 h-12 rounded-2xl bg-white p-1 flex items-center justify-center mb-8 shadow-lg shadow-[#2F6F6D]/30 transition group relative overflow-hidden border border-slate-700 hover:scale-105"
         title="SAFE SOLUTIONS - Labour Payment Manager"
       >
-        <Building2 className="w-6 h-6 text-[#F2E9D8]" />
+        <img src="/assest/logo.jpeg" alt="SAFE SOLUTIONS" className="w-full h-full object-contain" />
         <span className="absolute left-16 bg-[#161D26] text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition whitespace-nowrap shadow-md border border-slate-700">
           SAFE SOLUTIONS
         </span>

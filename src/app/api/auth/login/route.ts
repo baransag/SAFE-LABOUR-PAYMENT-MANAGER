@@ -42,10 +42,10 @@ export async function POST(request: Request) {
         role: user.role,
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { error: 'Internal server error during authentication.' },
+      { error: error?.message || 'Internal server error during authentication.' },
       { status: 500 }
     );
   }

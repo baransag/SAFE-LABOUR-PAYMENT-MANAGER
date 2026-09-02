@@ -55,8 +55,8 @@ export default function LoginPage() {
         <div className="bg-white rounded-3xl p-8 shadow-2xl border border-slate-100/80">
           {/* Header */}
           <div className="flex flex-col items-center text-center pb-6 border-b border-slate-100">
-            <div className="w-14 h-14 rounded-2xl bg-[#2F6F6D] text-[#F2E9D8] flex items-center justify-center shadow-lg shadow-[#2F6F6D]/25 mb-3">
-              <Building2 className="w-8 h-8" />
+            <div className="w-16 h-16 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md border border-slate-100 mb-3 overflow-hidden">
+              <img src="/assest/logo.jpeg" alt="SAFE SOLUTIONS Logo" className="w-full h-full object-contain" />
             </div>
             <h1 className="text-2xl font-black tracking-tight text-slate-900">SAFE SOLUTIONS</h1>
             <p className="text-xs font-semibold text-[#59718A] tracking-wider uppercase mt-0.5">

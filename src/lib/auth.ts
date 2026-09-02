@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
-import prisma from './prisma';
+import prisma, { ensureDefaultUsers } from './prisma';
 import bcrypt from 'bcryptjs';
 
 const SECRET_KEY = new TextEncoder().encode(
@@ -64,6 +64,8 @@ export async function destroySession() {
 }
 
 export async function authenticateUser(username: string, passwordPlain: string) {
+  await ensureDefaultUsers();
+
   const user = await prisma.user.findUnique({
     where: { username: username.toLowerCase().trim() },
   });
