@@ -1,0 +1,89 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./safe_solutions.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  fullName     String
+  role         String   @default("ACCOUNTS") // ADMIN, ACCOUNTS, VIEWER
+  passwordHash String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  transactions Transaction[]
+  auditLogs    AuditLog[]
+}
+
+model Labour {
+  id          String   @id // Format: LAB-0001
+  name        String
+  fatherName  String?
+  mobile      String?
+  workType    String   // e.g. Mason, Electrician, Carpenter, Plumber, Helper, Steel Fixer, Painter
+  salaryType  String   @default("DAILY") // DAILY, WEEKLY
+  dailyRate   Decimal  @default(0)
+  weeklyRate  Decimal  @default(0)
+  startDate   DateTime @default(now())
+  status      String   @default("ACTIVE") // ACTIVE, INACTIVE
+  notes       String?
+  isDeleted   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rates        LabourRateHistory[]
+  transactions Transaction[]
+}
+
+model LabourRateHistory {
+  id            String    @id @default(cuid())
+  labourId      String
+  labour        Labour    @relation(fields: [labourId], references: [id], onDelete: Cascade)
+  salaryType    String
+  rate          Decimal
+  effectiveFrom DateTime
+  effectiveTo   DateTime?
+  reason        String?
+  changedBy     String?
+  createdAt     DateTime  @default(now())
+}
+
+model Transaction {
+  id              String   @id // Format: TXN-YYYYMMDD-XXXX
+  labourId        String
+  labour          Labour   @relation(fields: [labourId], references: [id], onDelete: Restrict)
+  type            String   // SALARY_DUE, SALARY_PAYMENT, ADVANCE_GIVEN, ADVANCE_ADJUSTMENT, DEDUCTION, ADJUSTMENT
+  amount          Decimal
+  paymentMethod   String   @default("CASH") // CASH, BANK, JAZZCASH, EASYPAISA, OTHER, N/A
+  transactionDate DateTime
+  reference       String?
+  remarks         String?
+
+  // Payment Helper reference (optional audit, NOT attendance)
+  helperUnits     Decimal?
+  helperRate      Decimal?
+
+  createdById     String?
+  createdBy       User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  isDeleted       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userName   String
+  action     String   // LABOUR_CREATED, LABOUR_UPDATED, LABOUR_STATUS, RATE_CHANGED, TRANSACTION_CREATED, TRANSACTION_UPDATED, TRANSACTION_DELETED, USER_LOGIN
+  entityType String   // LABOUR, TRANSACTION, RATE, USER
+  entityId   String
+  details    String   // JSON string
+  createdAt  DateTime @default(now())
+}
